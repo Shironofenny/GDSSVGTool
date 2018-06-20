@@ -18,11 +18,16 @@ class GDSParser(object):
         self.trcorner = (0,0)
         # This gds has not been parsed yet
         self.isParsed = False
+        # The dictionary for all layers
+        self.layers = None
 
     def read(self, filename = None):
         if (filename):
             with open(filename, 'rb') as gdsfile:
                 self.stream = Library.load(gdsfile)
+
+    def loadLayerMap(self, layerMap):
+        pass
 
     '''
     Setting the resize factor.

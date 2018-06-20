@@ -1,6 +1,52 @@
 {
     "version": 0.1,
-    "layers": [
-
-    ]
+    "layers": {
+        "2": {
+            "name": "NWell",
+            "action": "Print"
+        },
+        "3": {
+            "name": "Diff",
+            "action": "Print"
+        },
+        "4": {
+            "name": "OD3V",
+            "action": "Ignore"
+        },
+        "13": {
+            "name": "Poly",
+            "action": "Print"
+        },
+        "7": {
+            "name": "PImp",
+            "stream": 7,
+            "action": "Ignore"   
+        },
+        "8": {
+            "name": "NImp",
+            "stream": 8,
+            "action": "Ignore"
+        },
+        "16": {
+            "name": "Metal1",
+            "stream": 16,
+            "action": "Print"
+        },
+        "40": {
+            "name": "Metal1Pin",
+            "stream": 40,
+            "action": "Merge",
+            "target": "Metal1"
+        },
+        "15": {
+            "name": "Contact",
+            "stream": 15,
+            "action": "Print"
+        },
+        "103": {
+            "name": "WellBody",
+            "stream": 103,
+            "action": "Ignore"
+        }
+    }
 }
