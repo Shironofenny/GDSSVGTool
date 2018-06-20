@@ -1,3 +1,4 @@
+import gdsii.elements
 from gdsii.library import Library
 from gdsii.elements import *
 
@@ -49,7 +50,15 @@ class GDSParser(object):
         self.
     '''
     def parse(self, resize = True):
-        print("Parsing...")
-        for library in self.stream:
-            print(library)
-        print("Parsing... Done!")
+        print("INFO   : Parsing...")
+        if len(self.stream) > 1:
+            print("WARNING: More than 1 structure has been found. Only the first library will be processed")
+            print("         Please confirm that your gds is flattened.")
+        _structure = self.stream[0]
+        for _element in _structure:
+            if (type(_element) is gdsii.elements.Text):
+                # Ignore text layers
+                pass
+            elif (type(_element) is gdsii.elements.Boundary):
+                print(_element.layer)
+        print("INFO   : Parsing... Done!")
