@@ -7,9 +7,9 @@ class LayerMap(object):
     def __init__(self, configFile = None):
         # isConfigured when initing is false
         self.isConfigured = False
+        self.layerMap = None
         if configFile:
             self.config(configFile)
-        self.layerMap = None
 
     '''
     config:
@@ -36,5 +36,4 @@ class LayerMap(object):
     Wrapper function to get data. Writing layerMap.layerMap is kind of ugly though.
     '''
     def getMap(self):
-        print(self.layerMap)
         return self.layerMap

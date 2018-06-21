@@ -1,6 +1,6 @@
 import gdsii.elements
 from gdsii.library import Library
-from gdsii.elements import *
+from gdsii.elements import Text, Boundary
 
 class GDSParser(object):
 
@@ -18,8 +18,12 @@ class GDSParser(object):
         self.trcorner = (0,0)
         # This gds has not been parsed yet
         self.isParsed = False
+        # The layer map
+        self.layerMap = None
         # The dictionary for all layers
         self.layers = None
+        # Flag for if a valid layer map is available
+        self.isLayerMapValid = False
 
     def read(self, filename = None):
         if (filename):
@@ -27,7 +31,10 @@ class GDSParser(object):
                 self.stream = Library.load(gdsfile)
 
     def loadLayerMap(self, layerMap):
-        print(layerMap.getMap())
+        self.layerMap = layerMap
+        _keys = layerMap.getMap()["layers"].keys()
+        self.layers = {x : [] for x in _keys}
+        self.isLayerMapValid = True
 
     '''
     Setting the resize factor.
@@ -40,8 +47,40 @@ class GDSParser(object):
     def setResizeFactor(self, resizeFactor):
         self.resizeFactor = resizeFactor
 
+    '''
+    '''
+    def iteratePoints(self, path, resize = False):
+        # Initialize output path variable
+        _path = []
+        for point in path:
+            if resize:
+                if (point[0] % resize is 0 and point[1] % resize is 0):
+                    pass
+                else:
+                    print("WARNING: Point not divisible by " + str(resize) + " found at ( " + str(point[0]) + ", " + str(point[1]) + ")")
+                _point = (int(point[0] / resize), int(point[1] / resize))
+            else:
+                _point = (point[0], point[1])
+            
+            # Update canvas corner information
+            if (_point[0] < self.blcorner[0]):
+                self.blcorner = (_point[0], self.blcorner[1])
+            if (_point[0] > self.trcorner[0]):
+                self.trcorner = (_point[0], self.trcorner[1])
+            if (_point[1] < self.blcorner[1]):
+                self.blcorner = (self.blcorner[0], _point[1])
+            if (_point[1] > self.trcorner[1]):
+                self.trcorner = (self.trcorner[0], _point[1])
+            
+            # Pushing point into path
+            _path.append(_point)
+        
+        return _path
+
+    '''
+    '''
     def saveCompressedGDS(self, filename):
-        Library.save(filename)
+        self.streamout.save(filename)
 
     '''
     Parsing method.
@@ -54,16 +93,39 @@ class GDSParser(object):
         self.getCanvasSize()
         self.
     '''
-    def parse(self, resize = True):
+    def parse(self, resize = True, layerMap = None):
         print("INFO   : Parsing...")
+
+        # Processing resizing information
+        _resize = resize
+        if (_resize is 1 or (resize is True and self.resizeFactor is 1)):
+            print("INFO   : Resize factor not set, or set to be 1. Output will preserve the scale of the initial gds file")
+            _resize = False
+        else:
+            _resize = self.resizeFactor
+        # From now on, _resize should be used as resize factor
+
+        # Processing layer map information
+        if layerMap:
+            self.loadLayerMap(layerMap)
+        
+        if not self.isLayerMapValid:
+            print("ERROR  : No valid layer map found. Aborting parsing process")
+            return
+        # self.layerMap should be ready from now, and self.layers should be initialized to empty lists
+
+        # Sort polygons on each layer into self.layers
         if len(self.stream) > 1:
             print("WARNING: More than 1 structure has been found. Only the first library will be processed")
             print("         Please confirm that your gds is flattened.")
         _structure = self.stream[0]
         for _element in _structure:
-            if (type(_element) is gdsii.elements.Text):
+            if (type(_element) is Text):
                 # Ignore text layers
                 pass
-            elif (type(_element) is gdsii.elements.Boundary):
-                pass
+            elif (type(_element) is Boundary):
+                # Sort _elements to different layers
+                _path = self.iteratePoints(_element.xy, _resize)
+                self.layers[str(_element.layer)].append(_path)
+
         print("INFO   : Parsing... Done!")
