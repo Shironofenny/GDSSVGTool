@@ -7,7 +7,7 @@ class LayerMap(object):
     def __init__(self, configFile = None):
         # isConfigured when initing is false
         self.isConfigured = False
-        self.layerMap = None
+        self.map = None
         if configFile:
             self.config(configFile)
 
@@ -21,7 +21,7 @@ class LayerMap(object):
     def config(self, configFile):
         try:
             with open(configFile) as jsonConfig:
-                self.layerMap = json.load(jsonConfig)
+                self.map = json.load(jsonConfig)
         except IOError as e:
             print("Specified file: " + configFile + " cannot be found.")
             print("Layer map configuration aborted.")
@@ -36,4 +36,19 @@ class LayerMap(object):
     Wrapper function to get data. Writing layerMap.layerMap is kind of ugly though.
     '''
     def getMap(self):
-        return self.layerMap
+        return self.map
+
+    '''
+    '''
+    def getLayerInfo(self, layerID = None):
+        if layerID:
+            try:
+                _layerInfo = self.map["layers"][layerID]
+            except KeyError as ke:
+                print("ERROR  : Layer ID not found in layer map")
+                print("         " + str(e))
+        else:
+            print("ERROR  : Layer ID not provided")
+            return
+
+        return _layerInfo

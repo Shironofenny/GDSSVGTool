@@ -79,7 +79,7 @@ class GDSParser(object):
 
     '''
     '''
-    def saveCompressedGDS(self, filename):
+    def saveGDS(self, filename):
         self.streamout.save(filename)
 
     '''
@@ -94,7 +94,7 @@ class GDSParser(object):
         self.
     '''
     def parse(self, resize = True, layerMap = None):
-        print("INFO   : Parsing...")
+        print("INFO   : Parsing GDSII stream...")
 
         # Processing resizing information
         _resize = resize
@@ -128,4 +128,4 @@ class GDSParser(object):
                 _path = self.iteratePoints(_element.xy, _resize)
                 self.layers[str(_element.layer)].append(_path)
 
-        print("INFO   : Parsing... Done!")
+        print("INFO   : Done parsing GDSII stream!")

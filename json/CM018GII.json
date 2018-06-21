@@ -3,49 +3,83 @@
     "layers": {
         "2": {
             "name": "NWell",
-            "action": "Print"
+            "action": "Print",
+            "printOrder": 1,
+            "color": {
+                "fill": "rgb(20, 20, 20)",
+                "fillOpacity": 0.2,
+                "stroke": "rgb(20, 20, 20)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.4
+            }
         },
         "3": {
             "name": "Diff",
-            "action": "Print"
+            "action": "Print",
+            "printOrder": 2,
+            "color": {
+                "fill": "rgb(183, 73, 73)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(183, 73, 73)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
         },
         "4": {
             "name": "OD3V",
             "action": "Ignore"
         },
-        "13": {
-            "name": "Poly",
-            "action": "Print"
-        },
         "7": {
             "name": "PImp",
-            "stream": 7,
             "action": "Ignore"   
         },
         "8": {
             "name": "NImp",
-            "stream": 8,
             "action": "Ignore"
         },
-        "16": {
-            "name": "Metal1",
-            "stream": 16,
-            "action": "Print"
-        },
-        "40": {
-            "name": "Metal1Pin",
-            "stream": 40,
-            "action": "Merge",
-            "target": "Metal1"
+        "13": {
+            "name": "Poly",
+            "action": "Print",
+            "printOrder": 3,
+            "color": {
+                "fill": "rgb(50, 90, 255)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(50, 90, 255)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
         },
         "15": {
             "name": "Contact",
-            "stream": 15,
-            "action": "Print"
+            "action": "Print",
+            "printOrder": 4,
+            "color": {
+                "fill": "rgb(50, 50, 50)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(50, 50, 50)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "16": {
+            "name": "Metal1",
+            "action": "Print",
+            "printOrder": 5,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "40": {
+            "name": "Metal1Pin",
+            "action": "Merge",
+            "target": "Metal1"
         },
         "103": {
             "name": "WellBody",
-            "stream": 103,
             "action": "Ignore"
         }
     }
