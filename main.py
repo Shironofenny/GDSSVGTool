@@ -1,6 +1,6 @@
-from src.SVGInterface import SVGInterface
-from src.GDSParser import GDSParser
-from src.LayerMap import LayerMap
+from src import SVGInterface
+from src import GDSParser
+from src import LayerMap
 
 layerMap = LayerMap("json/CM018GII.json")
 
