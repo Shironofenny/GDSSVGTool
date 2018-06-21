@@ -9,6 +9,7 @@ class LayerMap(object):
         self.isConfigured = False
         if configFile:
             self.config(configFile)
+        self.layerMap = None
 
     '''
     config:
@@ -20,10 +21,20 @@ class LayerMap(object):
     def config(self, configFile):
         try:
             with open(configFile) as jsonConfig:
-                _configs = json.load(jsonConfig)
+                self.layerMap = json.load(jsonConfig)
         except IOError as e:
             print("Specified file: " + configFile + " cannot be found.")
             print("Layer map configuration aborted.")
             return
 
         self.isConfigured = True
+
+    '''
+    getMap:
+    I : N/A
+    O : self.layerMap
+    Wrapper function to get data. Writing layerMap.layerMap is kind of ugly though.
+    '''
+    def getMap(self):
+        print(self.layerMap)
+        return self.layerMap

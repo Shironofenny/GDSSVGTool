@@ -27,7 +27,7 @@ class GDSParser(object):
                 self.stream = Library.load(gdsfile)
 
     def loadLayerMap(self, layerMap):
-        pass
+        print(layerMap.getMap())
 
     '''
     Setting the resize factor.
@@ -65,5 +65,5 @@ class GDSParser(object):
                 # Ignore text layers
                 pass
             elif (type(_element) is gdsii.elements.Boundary):
-                print(_element.layer)
+                pass
         print("INFO   : Parsing... Done!")
