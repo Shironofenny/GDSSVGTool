@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from src.CompGeoTools import CompGeoTools
 
 class LayerProcessor(object):
 
