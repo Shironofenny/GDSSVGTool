@@ -23,8 +23,9 @@ class LayerMap(object):
             with open(configFile) as jsonConfig:
                 self.map = json.load(jsonConfig)
         except IOError as e:
-            print("Specified file: " + configFile + " cannot be found.")
-            print("Layer map configuration aborted.")
+            print("ERROR  : Specified file: " + configFile + " cannot be found.")
+            print("         Layer map configuration aborted.")
+            print("         " + e)
             return
 
         self.isConfigured = True
@@ -46,7 +47,7 @@ class LayerMap(object):
                 _layerInfo = self.map["layers"][layerID]
             except KeyError as ke:
                 print("ERROR  : Layer ID not found in layer map")
-                print("         " + str(e))
+                print("         " + str(ke))
         else:
             print("ERROR  : Layer ID not provided")
             return

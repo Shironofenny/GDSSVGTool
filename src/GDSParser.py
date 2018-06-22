@@ -125,7 +125,15 @@ class GDSParser(object):
                 pass
             elif (type(_element) is Boundary):
                 # Sort _elements to different layers
-                _path = self.iteratePoints(_element.xy, _resize)
-                self.layers[str(_element.layer)].append(_path)
+                try:
+                    _path = self.iteratePoints(_element.xy, _resize)
+                    self.layers[str(_element.layer)].append(_path)
+                except KeyError as ke:
+                    print("Error  : Layer number " + str(ke) + " cannot be found in layer map.")
+                    print("       : Please check your layer map file.")
+        
+        print("INFO   : Reporting GDS Size")
+        print("         Bottom left corner " + str(self.blcorner))
+        print("         Top right corner " + str(self.trcorner))
 
         print("INFO   : Done parsing GDSII stream!")

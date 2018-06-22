@@ -41,6 +41,11 @@ class LayerProcessor(object):
         for _polygon in layer:
             _sPolygon = Polygon(shell = _polygon)
             _sPolygons.append(_sPolygon)
+            try:
+                _outPolygons = unary_union(_sPolygons)
+            except ValueError as ve:
+                print("ERROR  : Adding polygon " + _polygon + " creates problems")
+                print("         " + str(ve))
         _outPolygons = unary_union(_sPolygons)
         layer.clear()
         # Return value within layer
@@ -64,8 +69,6 @@ class LayerProcessor(object):
         for key in self.layers.keys():
             print("INFO   : Processing layer number " + key)
             self.mergeLayer(self.layers[key])
-            print("Merged layer: ")
-            print(self.layers[key])
 
     def processLayers(self):
         # Merge each layer
@@ -84,8 +87,7 @@ class LayerProcessor(object):
             else:
                 print("WARNING: Layer " + str(_layerID) + " (" + _layerName + ") does not have defined action")
                 print("         Action " + _layerAction + " is not defined")
-            
-        _printLayers.sort(key = lambda l : self.layerMap.getLayerInfo(l)["printOrder"])
+    
         self.layersToPrint = {_layerID : self.layers[_layerID] for _layerID in _printLayers}
 
     def getPrintLayers(self):
@@ -95,7 +97,12 @@ class LayerProcessor(object):
         return self.layersToPrint
 
     def printLayers(self, svgInterface):
-        for _layerID in self.layersToPrint:
+        # Dictionary only preserves order after python 3.6, so we use an
+        # alternative ordering method (less efficient for sure) that gives
+        # extra backward compatibility
+        _layerOrder = list(self.layersToPrint.keys())
+        _layerOrder.sort(key = lambda l : self.layerMap.getLayerInfo(l)["printOrder"])
+        for _layerID in _layerOrder:
             _paths = self.layersToPrint[_layerID]
             _colorData = self.layerMap.getLayerInfo(_layerID)["color"]
             _fillColor = _colorData["fill"]

@@ -1,6 +1,10 @@
 {
     "version": 0.1,
     "layers": {
+        "0": {
+            "name": "Reference",
+            "action": "Ignore"
+        },
         "2": {
             "name": "NWell",
             "action": "Print",
@@ -73,13 +77,239 @@
                 "strokeOpacity": 0.7
             }
         },
+        "17": {
+            "name": "VIA12",
+            "action": "Print",
+            "printOrder": 6,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
         "40": {
             "name": "Metal1Pin",
             "action": "Merge",
             "target": "Metal1"
         },
+        "18": {
+            "name": "Metal2",
+            "action": "Print",
+            "printOrder": 7,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "27": {
+            "name": "VIA23",
+            "action": "Print",
+            "printOrder": 8,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "41": {
+            "name": "Metal2Pin",
+            "action": "Merge",
+            "target": "Metal2"
+        },
+        "28": {
+            "name": "Metal3",
+            "action": "Print",
+            "printOrder": 9,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "29": {
+            "name": "VIA34",
+            "action": "Print",
+            "printOrder": 10,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "42": {
+            "name": "Metal3Pin",
+            "action": "Merge",
+            "target": "Metal3"
+        },
+        "31": {
+            "name": "Metal4",
+            "action": "Print",
+            "printOrder": 11,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "32": {
+            "name": "VIA45",
+            "action": "Print",
+            "printOrder": 12,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "43": {
+            "name": "Metal4Pin",
+            "action": "Merge",
+            "target": "Metal4"
+        },
+        "33": {
+            "name": "Metal5",
+            "action": "Print",
+            "printOrder": 13,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "39": {
+            "name": "VIA56",
+            "action": "Print",
+            "printOrder": 14,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "44": {
+            "name": "Metal5Pin",
+            "action": "Merge",
+            "target": "Metal5"
+        },
+        "38": {
+            "name": "Metal6",
+            "action": "Print",
+            "printOrder": 15,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "45": {
+            "name": "Metal6Pin",
+            "action": "Merge",
+            "target": "Metal6"
+        },
+        "19": {
+            "name": "Pad",
+            "action": "Print",
+            "printOrder": 16,
+            "color": {
+                "fill": "rgb(107, 193, 57)",
+                "fillOpacity": 0.5,
+                "stroke": "rgb(107, 193, 57)",
+                "strokeWidth": 5,
+                "strokeOpacity": 0.7
+            }
+        },
+        "23": {
+            "name": "P Midium VT implant",
+            "action": "Ignore"
+        },
+        "24": {
+            "name": "N Midium VT Implant",
+            "action": "Ignore"
+        },
+        "34": {
+            "name": "Salicide Protection",
+            "action": "Ignore"
+        },
+        "47": {
+            "name": "PolyPin",
+            "action": "Merge",
+            "target": "Poly"
+        },
+        "48": {
+            "name": "HRI Res",
+            "action": "Ignore"
+        },
+        "54": {
+            "name": "Poly Res Dummy",
+            "action": "Ignore"
+        },
+        "56": {
+            "name": "Diode Dummy",
+            "action": "Ignore"
+        },
+        "62": {
+            "name": "PR Boundary",
+            "action": "Ignore"
+        },
+        "67": {
+            "name": "MiM Bottom Metal",
+            "action": "Reserve"
+        },
+        "82": {
+            "name": "Deep NWell",
+            "action": "Ignore"
+        },
         "103": {
             "name": "WellBody",
+            "action": "Ignore"
+        },
+        "126": {
+            "name": "Seal Ring Dummy",
+            "action": "Ignore"
+        },
+        "131": {
+            "name": "MiM Bottom Dummy",
+            "action": "Ignore"
+        },
+        "134": {
+            "name": "HRI Res Non-silicide Dummy",
+            "action": "Ignore"
+        },
+        "138": {
+            "name": "Varactor Dummy",
+            "action": "Ignore"
+        },
+        "149": {
+            "name": "DMP2V Poly Res",
+            "action": "Ignore"
+        },
+        "178": {
+            "name": "Logo Boundary",
+            "action": "Ignore"
+        },
+        "183": {
+            "name": "Wirebond Dummy",
             "action": "Ignore"
         }
     }

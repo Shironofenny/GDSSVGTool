@@ -76,7 +76,7 @@ class CompGeoTools(object):
         return x1*y2 - x2*y1
 
     def isPointInEdge(self, point, edge):
-        value = self.cross2D(edge, self.makeEdge(edge[0],point))
+        pass
 
     '''
     isInPolygon

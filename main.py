@@ -6,7 +6,7 @@ from src import LayerProcessor
 layerMap = LayerMap("json/CM018GII.json")
 
 gdsParser = GDSParser()
-gdsParser.read("gds/opt_1xinv.gds")
+gdsParser.read("gds/assem_OTP_AMP_NVC_flat.gds")
 gdsParser.setResizeFactor(5)
 gdsParser.loadLayerMap(layerMap)
 gdsParser.parse()
@@ -14,6 +14,6 @@ gdsParser.parse()
 layerProcessor = LayerProcessor(layerMap = layerMap, layers = gdsParser.layers)
 layerProcessor.processLayers()
 
-svgInterface = SVGInterface("output/all.svg", (1200,1200))
-layerProcessor.printLayers(svgInterface = svgInterface)
-svgInterface.save()
+#svgInterface = SVGInterface("output/assem_flatv2.svg", (166000,148000))
+#layerProcessor.printLayers(svgInterface = svgInterface)
+#svgInterface.save()
