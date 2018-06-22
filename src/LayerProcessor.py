@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Computational geometry related functions
-def cross2D(v1, v2)
-
 class LayerProcessor(object):
 
     def __init__(self, layerMap = None, layers = None):
@@ -65,11 +62,8 @@ class LayerProcessor(object):
                 print("WARNING: Layer " + str(_layerID) + " (" + _layerName + ") does not have defined action")
                 print("         Action " + _layerAction + " is not defined")
             
-        _layersToPrint = {_layerID : self.layers[_layerID] for _layerID in _printLayers}
-        self.layersToPrint = { k : v
-                               for k, v in 
-                               sorted(_layersToPrint.iteritems(), key = lambda (k, v) : self.layerMap.getLayerInfo(k)["printOrder"])
-                             }
+        _printLayers.sort(key = lambda l : self.layerMap.getLayerInfo(l)["printOrder"])
+        self.layersToPrint = {_layerID : self.layers[_layerID] for _layerID in _printLayers}
 
     def getPrintLayers(self):
         return self.layersToPrint

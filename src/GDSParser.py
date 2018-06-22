@@ -2,8 +2,6 @@ import gdsii.elements
 from gdsii.library import Library
 from gdsii.elements import Text, Boundary
 
-from src import algo
-
 class GDSParser(object):
 
     def __init__(self, filename = None):

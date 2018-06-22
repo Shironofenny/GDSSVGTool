@@ -1,13 +1,7 @@
-<<<<<<< HEAD
 from src import SVGInterface
 from src import GDSParser
 from src import LayerMap
-=======
-from src.SVGInterface import SVGInterface
-from src.GDSParser import GDSParser
-from src.LayerMap import LayerMap
-from src.LayerProcessor import LayerProcessor
->>>>>>> f52bd238b8f9ef09370033271cf57826dedb9fc3
+from src import LayerProcessor
 
 layerMap = LayerMap("json/CM018GII.json")
 
