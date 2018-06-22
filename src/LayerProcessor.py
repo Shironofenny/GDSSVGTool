@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from src.CompGeoTools import CompGeoTools
+from shapely.geometry import Polygon
+from shapely.ops import unary_union
 
 class LayerProcessor(object):
 
@@ -34,16 +36,36 @@ class LayerProcessor(object):
     Windows OS. Leaving it here avoids a lot of those kind of bs.
     '''
     def mergeLayer(self, layer):
-        # double iteration through all the polygons
-        _nrPolygon = len(layer)
-        for i in range(_nrPolygon):
-            # Reconstructing ith polygon's edges
-            for j in range(i, _nrPolygon):
-                pass
+        # Convert all polygons into shapely.geometry.Polygon
+        _sPolygons = []
+        for _polygon in layer:
+            _sPolygon = Polygon(shell = _polygon)
+            _sPolygons.append(_sPolygon)
+        _outPolygons = unary_union(_sPolygons)
+        layer.clear()
+        # Return value within layer
+        if isinstance(_outPolygons, Polygon):
+            _coords = list(_outPolygons.exterior.coords)
+            _coordsInt = []
+            for _point in _coords:
+                _pointInt = (int(_point[0]), int(_point[1]))
+                _coordsInt.append(_pointInt)
+            layer.append(list(_coordsInt))
+        else:
+            for _polygon in _outPolygons.geoms:
+                _coords = list(_polygon.exterior.coords)
+                _coordsInt = []
+                for _point in _coords:
+                    _pointInt = (int(_point[0]), int(_point[1]))
+                    _coordsInt.append(_pointInt)
+                layer.append(list(_coordsInt))
 
     def mergeLayers(self):
-        for layer in self.layers:
-            self.mergeLayer(layer)
+        for key in self.layers.keys():
+            print("INFO   : Processing layer number " + key)
+            self.mergeLayer(self.layers[key])
+            print("Merged layer: ")
+            print(self.layers[key])
 
     def processLayers(self):
         # Merge each layer

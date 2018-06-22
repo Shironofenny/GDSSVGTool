@@ -34,20 +34,33 @@ class CompGeoTools(object):
         self.polarity = polarity
 
     '''
-    computePolarity
+    calibratePolarity
     I : e1, e2, two edges. e1 = P0->P1, e2 = P0->P2, P0, P1, P2 are 3 consecutive points in the polygon path
     O : N/A
     use two edges P0->P1 and P0->P2 to tell which polarity means a point is in a polygon
     '''
-    def computePolarity(self, e1, e2):
+    def calibratePolarity(self, e1, e2):
         _value = self.cross2D(e1, e2)
-        if _value is 0:
-            print("ERROR  : Polarity cannot be null!")
-            return False
-        elif _value > 0:
+        _polarity = self.computePolarity(_value)
+        if _polarity == CompGeoTools.Polarity.NUL:
+            print("ERROR  : Can't use zero as polarity to determine relations")
+            return
+        self.polarity = _polarity
+
+    '''
+    computePolarity
+    I : value
+    O : Polarity
+    Tells if the value is positive, negative, or zero
+    '''
+    def computePolarity(self, value):
+        if value is 0:
+            return CompGeoTools.Polarity.NUL
+        elif value > 0:
             return CompGeoTools.Polarity.POS
         else:
             return CompGeoTools.Polarity.NEG
+
 
     '''
     corss2D
@@ -62,11 +75,22 @@ class CompGeoTools(object):
         y2 = e2[1][1] - e2[0][1]
         return x1*y2 - x2*y1
 
+    def isPointInEdge(self, point, edge):
+        value = self.cross2D(edge, self.makeEdge(edge[0],point))
+
     '''
     isInPolygon
     I : polygon, the path for the polygon
     I : point, the point for test
-    O : 
+    O : Polarity, POS for in, NEG for out, and NUL for on
     '''
     def isInPolygon(self, polygon, point):
-        pass
+        for i in range(len(polygon)-1):
+            _edge = (polygon[i], polygon[i+1])
+            _value = self.isPointInEdge(point, _edge)
+            _polarity = self.computePolarity(_value)
+            if _polarity is CompGeoTools.Polarity.POS:
+                continue
+            else:
+                return _polarity
+        return CompGeoTools.Polarity.POS
