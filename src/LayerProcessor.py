@@ -39,23 +39,14 @@ class LayerProcessor(object):
         # Convert all polygons into shapely.geometry.Polygon
         _sPolygons = []
         for _polygon in layer:
-            _sPolygon = Polygon(shell = _polygon)
+            _sPolygon = Polygon(shell = _polygon).buffer(0)
             _sPolygons.append(_sPolygon)
         try:
             _outPolygons = unary_union(_sPolygons)
         except ValueError as ve:
             print("ERROR  : Cannot merge this layer")
             print("         " + str(ve))
-            print("         Debugging now...")
-            for _polygon in layer:
-                _sPolygon = Polygon(shell = _polygon)
-                _sPolygons.append(_sPolygon)
-                try:
-                    _outPolygons = unary_union(_sPolygons)
-                except ValueError as ve:
-                    print("ERROR  : At leaast adding polygon " + str(_polygon) + " creates problems")
-                    print("         " + str(ve))
-                    return
+            return
         layer.clear()
         # Return value within layer
         if isinstance(_outPolygons, Polygon):
