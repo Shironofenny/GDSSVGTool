@@ -1,5 +1,6 @@
 import svgwrite
 from svgwrite.shapes import Rect, Polygon
+from svgwrite.path import Path
 
 class SVGInterface(object):
 
@@ -13,10 +14,11 @@ class SVGInterface(object):
                 self.svgFile = svgwrite.Drawing(filename=filename, size=size)
             else:
                 self.svgFile = svgwrite.Drawing(filename=filename)
+            self.svgFile.fill(rule='nonzero')
 
     def drawLayer(self, paths, fillColor = 'black', fillOpacity = 0.5, strokeColor = 'black', strokeWidth = 1, strokeOpacity = 1.0):
         for path in paths:
-            _polygon = self.svgFile.add(Polygon(path))
+            _polygon = self.svgFile.add(Path(path))
             _polygon.fill(fillColor, opacity = fillOpacity)
             _polygon.stroke(strokeColor, width = strokeWidth, opacity = strokeOpacity)
 

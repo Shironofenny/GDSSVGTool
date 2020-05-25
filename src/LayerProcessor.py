@@ -11,6 +11,7 @@ class LayerProcessor(object):
         # State variable that will only be true if both layer map and layers are present
         self.isReady = False
         # Processed layer information
+        self.layerPaths = {}
         self.layersToPrint = []
         self.layersToStream = []
 
@@ -35,7 +36,7 @@ class LayerProcessor(object):
     This method should not belong to this class, however, it seems importing scope has some bugs in
     Windows OS. Leaving it here avoids a lot of those kind of bs.
     '''
-    def mergeLayer(self, layer):
+    def mergeLayer(self, layer, path):
         # Convert all polygons into shapely.geometry.Polygon
         _sPolygons = []
         for _polygon in layer:
@@ -47,28 +48,52 @@ class LayerProcessor(object):
             print("ERROR  : Cannot merge this layer")
             print("         " + str(ve))
             return
-        layer.clear()
+
         # Return value within layer
         if isinstance(_outPolygons, Polygon):
-            _coords = list(_outPolygons.exterior.coords)
-            _coordsInt = []
-            for _point in _coords:
-                _pointInt = (int(_point[0]), int(_point[1]))
-                _coordsInt.append(_pointInt)
-            layer.append(list(_coordsInt))
+            path.append(self.polygonToPath(_outPolygons))
         else:
             for _polygon in _outPolygons.geoms:
-                _coords = list(_polygon.exterior.coords)
-                _coordsInt = []
-                for _point in _coords:
-                    _pointInt = (int(_point[0]), int(_point[1]))
-                    _coordsInt.append(_pointInt)
-                layer.append(list(_coordsInt))
+                path.append(self.polygonToPath(_polygon))
 
     def mergeLayers(self):
         for key in self.layers.keys():
             print("INFO   : Processing layer number " + key)
-            self.mergeLayer(self.layers[key])
+            # Initialize paths for each layer
+            self.layerPaths[key] = []
+            self.mergeLayer(self.layers[key], self.layerPaths[key])
+
+    '''
+    polygonToPath:
+        Convert a polygon information into an W3 compatible path information.
+        It also rounds the points into its neariest integer
+    '''
+    def polygonToPath(self, polygon = None):
+        if polygon is None:
+            return ''
+        else:
+            # Define the output string for the path definition
+            _retVal = ''
+            # Assemble the all coords list
+            _paths = []
+            _paths.append(list(polygon.exterior.coords))
+            for _interiorPath in polygon.interiors:
+                _paths.append(list(_interiorPath.coords))
+            # Process each path
+            for _path in _paths:
+                _prevPoint = None
+                for _point in _path:
+                    _xNow = int(_point[0])
+                    _yNow = int(_point[1])
+                    if _prevPoint is None:
+                        _retVal = _retVal + 'M' + str(_xNow) + ',' + str(_yNow) + ' '
+                    else:
+                        if _xNow == _prevPoint[0]:
+                            _retVal = _retVal + 'V' + str(_yNow) + ' '
+                        else:
+                            _retVal = _retVal + 'H' + str(_xNow) + ' '
+                    _prevPoint = (_xNow, _yNow)
+            return _retVal
 
     def processLayers(self):
         # Merge each layer
@@ -88,7 +113,7 @@ class LayerProcessor(object):
                 print("WARNING: Layer " + str(_layerID) + " (" + _layerName + ") does not have defined action")
                 print("         Action " + _layerAction + " is not defined")
     
-        self.layersToPrint = {_layerID : self.layers[_layerID] for _layerID in _printLayers}
+        self.layersToPrint = {_layerID : self.layerPaths[_layerID] for _layerID in _printLayers}
 
     def getPrintLayers(self):
         return self.layersToPrint
